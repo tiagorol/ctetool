@@ -35,6 +35,11 @@ public class EmployeeController {
         return new ModelAndView("employeeForm");
     }
     
+    @RequestMapping("index")
+    public ModelAndView index() {
+        return new ModelAndView("index");
+    }
+    
     @RequestMapping("editEmployee")
     public ModelAndView editEmployee(@RequestParam long id, @ModelAttribute Employee employee) {
     	logger.info("Updating the Employee for the Id "+id);
