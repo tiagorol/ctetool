@@ -1,4 +1,4 @@
-package com.ranga.entity;
+package br.com.ctetool.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

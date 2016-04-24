@@ -1,4 +1,4 @@
-package com.ranga.util;
+package br.com.ctetool.util;
 
 import java.io.Serializable;
 import java.util.List;
