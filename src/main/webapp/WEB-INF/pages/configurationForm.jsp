@@ -48,6 +48,8 @@
                     </div>
     
                 </form:form>
+                
+                <a href="index">Voltar</a>
             </div>
         </div>
     </div>
