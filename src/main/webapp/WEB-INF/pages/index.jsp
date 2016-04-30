@@ -19,12 +19,13 @@
 	    <div class="panel panel-success">
 	        <div class="panel-heading">
 	            <h3 class="panel-title">
-					<b>Escolha o tipo de Topologia que deseja testar</b>
+					<b>Escolha a opção que você deseja</b>
 	            </h3>
 	        </div>
 	        <div class="panel-body">
-	            <a href="createTopologySingle">Single</a><br/>
-			    <a href="createTopologyMulti">Multi</a>
+	            <a href="createConfiguration">Configuração</a><br/>
+	            <a href="createTopologySingle">Cria Topolgia Single</a><br/>
+			    <a href="createTopologyMulti">Criar Topologia Multi</a>
 	        </div>
 	    </div>
 	</div>
