@@ -13,6 +13,10 @@
 	<mvc:annotation-driven />
 	
 	<mvc:resources mapping="/resources/**" location="/WEB-INF/resources/" />
+	
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="ctetool"/>
+    </bean>
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

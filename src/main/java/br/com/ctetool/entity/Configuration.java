@@ -7,13 +7,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
 public class Configuration implements Serializable {
 
 	private static final long serialVersionUID = 1833837358969476244L;
+	
+	@Transient
+	private static final String IPADDRESS_PATTERN = 
+			"^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+			"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+			"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+			"([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,6 +50,7 @@ public class Configuration implements Serializable {
 	@NotNull
 	@Size(min = 3, max = 20)
 	@Column(name = "host_crawler")
+	@Pattern(regexp = IPADDRESS_PATTERN, message = "Valor invalido")
 	private String hostCrawler;
 	
 	@NotNull

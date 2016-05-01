@@ -92,6 +92,9 @@
                         <div class="control-label col-xs-3"> <form:label path="workloads" >Workload</form:label> </div>
                         <div class="col-xs-6">
                             <form:input cssClass="form-control" path="workloads" value="${configurationObject.workloads}"/>
+                            <div class="help-block">
+                            	Ex.: 100,300,500,700
+                            </div>
                         </div>
                         <div class="help-block with-errors">
                         	<form:errors path="workloads" />

@@ -11,10 +11,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.com.ctetool.entity.Configuration;
 import br.com.ctetool.service.ConfigurationService;
+import br.com.ctetool.validator.ConfigurationValidator;
 
 @Controller
 public class ConfigurationController {
-	
+
+	@Autowired
+	private ConfigurationValidator configurationValidator;
+
 	@Autowired
 	private ConfigurationService configurationService;
 
@@ -26,11 +30,13 @@ public class ConfigurationController {
 
 	@RequestMapping("saveConfiguration")
 	public ModelAndView saveConfiguration(@Valid Configuration configuration, BindingResult bindingResult) {
-		
-		if(bindingResult.hasErrors()){
-			return new ModelAndView("configurationForm"); 
+
+		configurationValidator.validate(configuration, bindingResult);
+
+		if (bindingResult.hasErrors()) {
+			return new ModelAndView("configurationForm");
 		}
-		
+
 		configurationService.save(configuration);
 		return new ModelAndView("redirect:index");
 	}
