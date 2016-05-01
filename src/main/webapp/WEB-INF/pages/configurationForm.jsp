@@ -28,10 +28,52 @@
                 <form:form id="configurationRegisterForm" cssClass="form-horizontal" modelAttribute="configuration" method="post" action="saveConfiguration">
     
                     <div class="form-group">
-                        <div class="control-label col-xs-3"> <form:label path="image" >Image</form:label> </div>
+                        <div class="control-label col-xs-3"> <form:label path="image" >Imagem</form:label> </div>
                         <div class="col-xs-6">
                             <form:hidden path="id" value="${configurationObject.id}"/>
                             <form:input cssClass="form-control" path="image" value="${configurationObject.image}"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="control-label col-xs-3"> <form:label path="size" >Tipo Instância</form:label> </div>
+                        <div class="col-xs-6">
+                            <form:input cssClass="form-control" path="size" value="${configurationObject.size}"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="control-label col-xs-3"> <form:label path="sizeWordpress" >Tipo Instância WordPress</form:label> </div>
+                        <div class="col-xs-6">
+                            <form:input cssClass="form-control" path="sizeWordpress" value="${configurationObject.sizeWordpress}"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="control-label col-xs-3"> <form:label path="agentUser" >Usuário (SSH)</form:label> </div>
+                        <div class="col-xs-6">
+                            <form:input cssClass="form-control" path="agentUser" value="${configurationObject.agentUser}"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="control-label col-xs-3"> <form:label path="hostCrawler" >Host Crawler</form:label> </div>
+                        <div class="col-xs-6">
+                            <form:input cssClass="form-control" path="hostCrawler" value="${configurationObject.hostCrawler}"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="control-label col-xs-3"> <form:label path="rounds" >Número de Execuções</form:label> </div>
+                        <div class="col-xs-6">
+                            <form:input cssClass="form-control" path="rounds" value="${configurationObject.rounds}"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="control-label col-xs-3"> <form:label path="workloads" >Workload</form:label> </div>
+                        <div class="col-xs-6">
+                            <form:input cssClass="form-control" path="workloads" value="${configurationObject.workloads}"/>
                         </div>
                     </div>
     
