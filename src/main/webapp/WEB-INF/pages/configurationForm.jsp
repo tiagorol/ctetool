@@ -33,12 +33,18 @@
                             <form:hidden path="id" value="${configurationObject.id}"/>
                             <form:input cssClass="form-control" path="image" value="${configurationObject.image}"/>
                         </div>
+                        <div class="help-block with-errors">
+                        	<form:errors path="image" />
+                        </div>
                     </div>
                     
                     <div class="form-group">
                         <div class="control-label col-xs-3"> <form:label path="size" >Tipo Instância</form:label> </div>
                         <div class="col-xs-6">
                             <form:input cssClass="form-control" path="size" value="${configurationObject.size}"/>
+                        </div>
+                        <div class="help-block with-errors">
+                        	<form:errors path="size" />
                         </div>
                     </div>
                     
@@ -47,12 +53,18 @@
                         <div class="col-xs-6">
                             <form:input cssClass="form-control" path="sizeWordpress" value="${configurationObject.sizeWordpress}"/>
                         </div>
+                        <div class="help-block with-errors">
+                        	<form:errors path="sizeWordpress" />
+                        </div>
                     </div>
                     
                     <div class="form-group">
                         <div class="control-label col-xs-3"> <form:label path="agentUser" >Usuário (SSH)</form:label> </div>
                         <div class="col-xs-6">
                             <form:input cssClass="form-control" path="agentUser" value="${configurationObject.agentUser}"/>
+                        </div>
+                        <div class="help-block with-errors">
+                        	<form:errors path="agentUser" />
                         </div>
                     </div>
                     
@@ -61,6 +73,9 @@
                         <div class="col-xs-6">
                             <form:input cssClass="form-control" path="hostCrawler" value="${configurationObject.hostCrawler}"/>
                         </div>
+                        <div class="help-block with-errors">
+                        	<form:errors path="hostCrawler" />
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -68,12 +83,18 @@
                         <div class="col-xs-6">
                             <form:input cssClass="form-control" path="rounds" value="${configurationObject.rounds}"/>
                         </div>
+                        <div class="help-block with-errors">
+                        	<form:errors path="rounds" />
+                        </div>
                     </div>
                     
                     <div class="form-group">
                         <div class="control-label col-xs-3"> <form:label path="workloads" >Workload</form:label> </div>
                         <div class="col-xs-6">
                             <form:input cssClass="form-control" path="workloads" value="${configurationObject.workloads}"/>
+                        </div>
+                        <div class="help-block with-errors">
+                        	<form:errors path="workloads" />
                         </div>
                     </div>
     
@@ -95,37 +116,6 @@
             </div>
         </div>
     </div>
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	
-	<script type="text/javascript">
-		function submitConfigurationForm() {				
-			
-		    // getting the configuration form values
-		    var name = $('#name').val().trim();
-		    var age = $('#age').val();
-		    var salary = $('#salary').val();
-		    if(name.length ==0) {
-		        alert('Please enter name');
-		        $('#name').focus();
-		        return false;
-		    }
-	
-		    if(age <= 0) {
-		        alert('Please enter proper age');
-		        $('#age').focus();
-		        return false;
-		    }
-	
-		    if(salary <= 0) {
-		        alert('Please enter proper salary');
-		        $('#salary').focus();
-		        return false;
-		    }
-		    return true;
-		};	
-	</script>
 
 </body>
 </html>

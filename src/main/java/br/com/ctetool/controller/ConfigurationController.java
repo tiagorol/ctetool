@@ -1,7 +1,10 @@
 package br.com.ctetool.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,7 +25,12 @@ public class ConfigurationController {
 	}
 
 	@RequestMapping("saveConfiguration")
-	public ModelAndView saveConfiguration(@ModelAttribute Configuration configuration) {
+	public ModelAndView saveConfiguration(@Valid Configuration configuration, BindingResult bindingResult) {
+		
+		if(bindingResult.hasErrors()){
+			return new ModelAndView("configurationForm"); 
+		}
+		
 		configurationService.save(configuration);
 		return new ModelAndView("redirect:index");
 	}

@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Configuration implements Serializable {
@@ -15,28 +17,37 @@ public class Configuration implements Serializable {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(nullable = false)
+	@NotNull
     private Long id;
 	
-	@Column(nullable = false, length = 20)
+	@NotNull
+	@Size(min = 3, max = 20)
 	private String image;
 	
-	@Column(nullable = false, length = 20)
+	@NotNull
+	@Size(min = 3, max = 20)
 	private String size;
 	
-	@Column(name = "size_wordpress", nullable = false, length = 20)
+	@NotNull
+	@Size(min = 3, max = 20)
+	@Column(name = "size_wordpress")
 	private String sizeWordpress;
 	
-	@Column(name = "agent_user", nullable = false, length = 20)
+	@NotNull
+	@Size(min = 3, max = 20)
+	@Column(name = "agent_user")
 	private String agentUser;
 	
-	@Column(name = "host_crawler", nullable = false, length = 20)
+	@NotNull
+	@Size(min = 3, max = 20)
+	@Column(name = "host_crawler")
 	private String hostCrawler;
 	
-	@Column(nullable = false)
+	@NotNull
 	private Integer rounds;
 	
-	@Column(nullable = false, length = 40)
+	@NotNull
+	@Size(min = 3, max = 40)
 	private String workloads;
 
 	public Long getId() {
