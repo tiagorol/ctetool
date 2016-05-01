@@ -25,7 +25,7 @@ public class ConfigurationController {
 	@RequestMapping("createConfiguration")
 	public ModelAndView createConfiguration(@ModelAttribute Configuration configuration) {
 		configuration = configurationService.findConfiguration();
-		return new ModelAndView("configurationForm", "configurationObject", configuration);
+		return new ModelAndView("configuration/configurationForm", "configurationObject", configuration);
 	}
 
 	@RequestMapping("saveConfiguration")
@@ -34,7 +34,7 @@ public class ConfigurationController {
 		configurationValidator.validate(configuration, bindingResult);
 
 		if (bindingResult.hasErrors()) {
-			return new ModelAndView("configurationForm");
+			return new ModelAndView("configuration/configurationForm");
 		}
 
 		configurationService.save(configuration);

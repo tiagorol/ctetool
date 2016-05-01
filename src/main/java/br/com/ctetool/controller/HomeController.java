@@ -9,7 +9,7 @@ public class HomeController {
 	
 	@RequestMapping(value = {"index", "/"})
 	public ModelAndView getAllEmployees() {
-		return new ModelAndView("index");
+		return new ModelAndView("home/index");
 	}
 
 }

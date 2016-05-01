@@ -8,12 +8,12 @@ public class TopologyController {
 	
     @RequestMapping("createTopologySingle")
     public ModelAndView createTopologySingle() {
-        return new ModelAndView("topologySingleForm");
+        return new ModelAndView("topology/topologySingleForm");
     }
     
     @RequestMapping("createTopologyMulti")
     public ModelAndView createTopologyMulti() {
-        return new ModelAndView("topologyMultiForm");
+        return new ModelAndView("topology/topologyMultiForm");
     }
     
 }
