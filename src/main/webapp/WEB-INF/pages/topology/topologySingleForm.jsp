@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -90,7 +91,29 @@
 					Virtual Machine
 			 	</div>
 			 	
- 				<a href="index">Voltar</a>
+ 				<div class="panel-body">
+	                <form:form cssClass="form-horizontal" modelAttribute="benchmark" method="post" action="saveBenchmark">
+	                    <div class="form-group">
+	                        <div class="col-xs-6">
+	                            <form:hidden path="type" value="0"/>
+	                        </div>
+	                    </div>
+	                    
+	                    <div class="form-group">
+	                        <div class="control-label col-xs-3"> <form:label path="name" >Nome</form:label> </div>
+	                        <div class="col-xs-6">
+	                            <form:input cssClass="form-control" path="name" value="${benchmarkObject.name}"/>
+	                        </div>
+	                        <div class="help-block with-errors">
+	                        	<form:errors path="name" />
+	                        </div>
+                    	</div>
+	                    
+	                    <input type="submit" id="saveBenchmark" class="btn btn-primary" value="Salvar" />
+	                	<a href="index">Voltar</a>     
+	                </form:form>
+            	</div>
+ 				
 	        </div>
 	    </div>
 	</div>

@@ -26,7 +26,6 @@ public class Configuration implements Serializable {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	@NotNull
     private Long id;
 	
 	@NotNull
@@ -57,7 +56,7 @@ public class Configuration implements Serializable {
 	private Integer rounds;
 	
 	@NotNull
-	@Size(min = 3, max = 40)
+	@Size(min = 2, max = 40)
 	private String workloads;
 
 	public Long getId() {

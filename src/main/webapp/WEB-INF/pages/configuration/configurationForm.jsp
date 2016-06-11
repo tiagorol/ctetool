@@ -101,21 +101,10 @@
                         </div>
                     </div>
     
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-xs-4">
-                            </div>
-                            <div class="col-xs-4">
-                                <input type="submit" id="saveConfiguration" class="btn btn-primary" value="Salvar" />
-                            </div>
-                            <div class="col-xs-4">
-                            </div>
-                        </div>
-                    </div>
-    
+                    <input type="submit" id="saveConfiguration" class="btn btn-primary" value="Salvar" />
+                	<a href="index">Voltar</a>
                 </form:form>
                 
-                <a href="index">Voltar</a>
             </div>
         </div>
     </div>

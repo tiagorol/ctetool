@@ -24,7 +24,7 @@
 	        </div>
 	        <div class="panel-body">
 	            <a href="createConfiguration">Configuração</a><br/>
-	            <a href="createTopologySingle">Cria Topolgia Single</a><br/>
+	            <a href="createTopologySingle">Cria Topologia Single</a><br/>
 			    <a href="createTopologyMulti">Criar Topologia Multi</a>
 	        </div>
 	    </div>
