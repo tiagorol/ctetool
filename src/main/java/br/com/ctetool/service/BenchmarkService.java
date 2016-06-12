@@ -1,5 +1,7 @@
 package br.com.ctetool.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
@@ -15,6 +17,15 @@ public class BenchmarkService extends BaseService {
 			return create(benchmark);
 		}
 		return update(benchmark);
+	}
+	
+	public List<Benchmark> fetchAll() {
+		return super.fetchAll(Benchmark.class);
+	}
+	
+	@Override
+	public <T> void delete(T entity) {
+		super.delete(entity);
 	}
 
 }

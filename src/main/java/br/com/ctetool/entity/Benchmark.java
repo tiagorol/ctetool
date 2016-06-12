@@ -65,9 +65,14 @@ public class Benchmark implements Serializable {
 	private Integer type;
 	
 	public Benchmark() {
-		
+		super();
 	}
 
+	public Benchmark(long id) {
+		this();
+		this.id = id;
+	}
+	
 	public Benchmark(Benchmark benchmark, Configuration configuration) {
 		this.numberInstanceDb = 1;
 		this.name = benchmark.getName();
@@ -81,7 +86,7 @@ public class Benchmark implements Serializable {
 			createBenchmarkMulti(benchmark);
 		}
 	}
-	
+
 	private void createBenchmarkMulti(Benchmark benchmark) {
 		this.typeTopology = TypeTopology.MULTI;
 		this.numberInstanceWp = benchmark.numberInstanceWp;

@@ -25,7 +25,8 @@
 	        <div class="panel-body">
 	            <a href="createConfiguration">Configuração</a><br/>
 	            <a href="createTopologySingle">Cria Topologia Single</a><br/>
-			    <a href="createTopologyMulti">Criar Topologia Multi</a>
+			    <a href="createTopologyMulti">Criar Topologia Multi</a><br/>
+			    <a href="listBenchmark">Listar Topologias</a>
 	        </div>
 	    </div>
 	</div>
