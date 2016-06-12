@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -93,19 +94,54 @@
 	            <br/>
 	            <br/>
 	            
-				<div id="load-balance-dropzone" class="dropzone">
-					Load Balancer
-			 	</div>
+                <form:form cssClass="form-horizontal" modelAttribute="benchmark" method="post" action="saveBenchmark">
+                
+				 	<div class="help-block with-errors" style="margin: 0 auto; width: 40%;">
+		            	<form:errors path="numberInstanceLb" />
+		            </div>
+		            
+		            <div class="help-block with-errors" style="margin: 0 auto; width: 40%;">
+		            	<form:errors path="numberInstanceWp" />
+		            </div>
+		            
+		            <div class="help-block with-errors" style="margin: 0 auto; width: 40%;">
+		            	<form:errors path="numberInstanceDb" />
+		            </div>
+		            
+					<div id="load-balance-dropzone" class="dropzone">
+						Load Balancer
+				 	</div>
+				 	
+				 	<div id="aplication-layer-dropzone" class="dropzone">
+						Aplication Layer
+				 	</div>
+				 	
+				 	 <div id="database-dropzone" class="dropzone">
+						Database
+				 	</div>
 			 	
-			 	<div id="aplication-layer-dropzone" class="dropzone">
-					Aplication Layer
-			 	</div>
-			 	
-			 	 <div id="database-dropzone" class="dropzone">
-					Database
-			 	</div>
-			 	
- 				<a href="index">Voltar</a>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <form:hidden path="type" value="1"/>
+                            <form:hidden id="numberInstanceLb" path="numberInstanceLb" value="0" />
+                            <form:hidden id="numberInstanceWp" path="numberInstanceWp" value="0" />
+                            <form:hidden id="numberInstanceDb" path="numberInstanceDb" value="0" />
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="control-label col-xs-3"> <form:label path="name" >Nome</form:label> </div>
+                        <div class="col-xs-6">
+                            <form:input cssClass="form-control" path="name" value="${benchmarkObject.name}"/>
+                        </div>
+                        <div class="help-block with-errors">
+                        	<form:errors path="name" />
+                        </div>
+                   	</div>
+                    
+                    <input type="submit" id="saveBenchmark" onclick="beforeSubmit()" class="btn btn-primary" value="Salvar" />
+                	<a href="index">Voltar</a>     
+                </form:form>
 	        </div>
 	    </div>
 	</div>
@@ -229,6 +265,41 @@
 			ondropdeactivate(event);
 		  }
 		});
+		
+		function beforeSubmit(){
+			var input_nginx = document.getElementById('ondrop-drag-nginx').value;
+			var input_mysql = document.getElementById('ondrop-drag-mysql').value;
+			
+			for(i = 1; i < 6; i++){
+				var input = document.getElementById('ondrop-drag-wordpress' + i).value;
+				if(input == 'true'){
+					addNumberInstanceWp();
+				}
+			}
+			
+			if(input_nginx == 'true'){
+				addNumberInstanceLb();
+			}
+			
+			if(input_mysql == 'true'){
+				addNumberInstanceDb();
+			}
+		}
+		
+		function addNumberInstanceLb(){
+			var numberInstanceLb = parseInt(document.getElementById('numberInstanceLb').value);
+			document.getElementById('numberInstanceLb').value = numberInstanceLb + 1;
+		}
+		
+		function addNumberInstanceWp(){
+			var numberInstanceWp = parseInt(document.getElementById('numberInstanceWp').value);
+			document.getElementById('numberInstanceWp').value = numberInstanceWp + 1;
+		}
+		
+		function addNumberInstanceDb(){
+			var numberInstanceDb = parseInt(document.getElementById('numberInstanceDb').value);
+			document.getElementById('numberInstanceDb').value = numberInstanceDb + 1;
+		}
 		
 		function moverInicioSePosicaoInvalida(valor){
 			if(document.getElementById('ondrop-' + valor).value != 'true'){

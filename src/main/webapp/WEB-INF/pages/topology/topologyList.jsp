@@ -32,9 +32,8 @@
                 <table class="table table-hover table-bordered">
                     <thead style="background-color: #bce8f1;">
                     <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Tipo Topoligia</th>
+                        <th>Nome</th>
+                        <th>Tipo Topologia</th>
                         <th>Nº Instâncias LB</th>
                         <th>Nº Instâncias WP</th>
                         <th>Nº Instâncias BD</th>
@@ -48,12 +47,11 @@
                     <tbody>
                     <c:forEach items="${listBenchmark}" var="benchmark">
                         <tr>
-                        	<th><c:out value="${benchmark.id}"/></th>
                         	<th><c:out value="${benchmark.name}"/></th>
                         	<th><c:out value="${benchmark.typeTopology}"/></th>
+                        	<th><c:out value="${benchmark.numberInstanceLb}"/></th>
                         	<th><c:out value="${benchmark.numberInstanceWp}"/></th>
                         	<th><c:out value="${benchmark.numberInstanceDb}"/></th>
-                        	<th><c:out value="${benchmark.numberInstanceLb}"/></th>
                         	<th><c:out value="${benchmark.size}"/></th>
                         	<th><c:out value="${benchmark.sizeWordpress}"/></th>
                         	<th><c:out value="${benchmark.rounds}"/></th>

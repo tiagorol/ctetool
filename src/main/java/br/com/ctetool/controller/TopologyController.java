@@ -15,9 +15,15 @@ import br.com.ctetool.entity.Benchmark;
 import br.com.ctetool.entity.Configuration;
 import br.com.ctetool.service.BenchmarkService;
 import br.com.ctetool.service.ConfigurationService;
+import br.com.ctetool.validator.BenchmarkValidator;
 
 @Controller
 public class TopologyController {
+	
+	private static final String[] FIELD_VALIDADE = new String[]{"name", "numberInstanceLb", "numberInstanceWp", "numberInstanceDb"};
+	
+	@Autowired
+	private BenchmarkValidator benchmarkValidator; 
 	
 	@Autowired
 	private BenchmarkService benchmarkService; 
@@ -43,20 +49,35 @@ public class TopologyController {
     }
     
     @RequestMapping("createTopologyMulti")
-    public ModelAndView createTopologyMulti() {
-        return new ModelAndView("topology/topologyMultiForm");
+    public ModelAndView createTopologyMulti(@ModelAttribute Benchmark benchmark) {
+        return new ModelAndView("topology/topologyMultiForm", "benchmarkObject", new Benchmark());
     }
     
     @RequestMapping("saveBenchmark")
 	public ModelAndView saveBenchmark(@Valid Benchmark benchmark, BindingResult bindingResult) {
-    	if (bindingResult.hasFieldErrors("name")) {
-    		return new ModelAndView("topology/topologySingleForm");
+    	benchmarkValidator.validate(benchmark, bindingResult);
+    	
+    	if(hasFieldErrors(bindingResult)){
+    		return new ModelAndView(getFrom(benchmark));
     	}
     	
     	Configuration configuration = configurationService.findConfiguration();
     	benchmark = new Benchmark(benchmark, configuration);
     	benchmarkService.save(benchmark);
     	return new ModelAndView("redirect:index");
+	}
+
+	private boolean hasFieldErrors(BindingResult bindingResult) {
+		for (String field : FIELD_VALIDADE) {
+			if(bindingResult.hasFieldErrors(field)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private String getFrom(Benchmark benchmark) {
+		return benchmark.getType() == 0 ?  "topology/topologySingleForm" :  "topology/topologyMultiForm";
 	}
     
 }

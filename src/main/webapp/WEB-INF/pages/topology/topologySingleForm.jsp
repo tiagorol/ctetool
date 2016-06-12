@@ -79,7 +79,7 @@
 	            </h3>
 	        </div>
 	        <div class="panel-body">
-	            
+                
 				<div id="div-drag-wordpress1" onMouseOut="moverInicioSePosicaoInvalida('drag-wordpress1')" class="draggable drag-drop drag-wordpress1">WordPress</div>
 				
 				<div id="div-drag-mysql" onMouseOut="moverInicioSePosicaoInvalida('drag-mysql')" class="draggable drag-drop drag-mysql">MySQL</div>
@@ -87,32 +87,42 @@
 	            <br/>
 	            <br/>
 	            
-			 	<div id="aplication-layer-dropzone" class="dropzone">
-					Virtual Machine
-			 	</div>
+                <form:form cssClass="form-horizontal" modelAttribute="benchmark" method="post" action="saveBenchmark">
+		            
+		            <div class="help-block with-errors" style="margin: 0 auto; width: 40%;">
+		            	<form:errors path="numberInstanceWp" />
+		            </div>
+		            
+		            <div class="help-block with-errors" style="margin: 0 auto; width: 40%;">
+		            	<form:errors path="numberInstanceDb" />
+		            </div>
+		            
+				 	<div id="aplication-layer-dropzone" class="dropzone">
+						Virtual Machine
+				 	</div>
 			 	
- 				<div class="panel-body">
-	                <form:form cssClass="form-horizontal" modelAttribute="benchmark" method="post" action="saveBenchmark">
-	                    <div class="form-group">
-	                        <div class="col-xs-6">
-	                            <form:hidden path="type" value="0"/>
-	                        </div>
-	                    </div>
-	                    
-	                    <div class="form-group">
-	                        <div class="control-label col-xs-3"> <form:label path="name" >Nome</form:label> </div>
-	                        <div class="col-xs-6">
-	                            <form:input cssClass="form-control" path="name" value="${benchmarkObject.name}"/>
-	                        </div>
-	                        <div class="help-block with-errors">
-	                        	<form:errors path="name" />
-	                        </div>
-                    	</div>
-	                    
-	                    <input type="submit" id="saveBenchmark" class="btn btn-primary" value="Salvar" />
-	                	<a href="index">Voltar</a>     
-	                </form:form>
-            	</div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <form:hidden path="type" value="0"/>
+                            <form:hidden id="numberInstanceLb" path="numberInstanceLb" value="0" />
+                            <form:hidden id="numberInstanceWp" path="numberInstanceWp" value="0" />
+                            <form:hidden id="numberInstanceDb" path="numberInstanceDb" value="0" />
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="control-label col-xs-3"> <form:label path="name" >Nome</form:label> </div>
+                        <div class="col-xs-6">
+                            <form:input cssClass="form-control" path="name" value="${benchmarkObject.name}"/>
+                        </div>
+                        <div class="help-block with-errors">
+                        	<form:errors path="name" />
+                        </div>
+                   	</div>
+                    
+                    <input type="submit" id="saveBenchmark" onclick="beforeSubmit()" class="btn btn-primary" value="Salvar" />
+                	<a href="index">Voltar</a>     
+                </form:form>
  				
 	        </div>
 	    </div>
@@ -178,6 +188,29 @@
 			ondropdeactivate(event);
 		  }
 		});
+		
+		function beforeSubmit(){
+			var input_wordpress = document.getElementById('ondrop-drag-wordpress1').value;
+			var input_mysql = document.getElementById('ondrop-drag-mysql').value;
+			
+			if(input_wordpress == 'true'){
+				addNumberInstanceWp();
+			}
+			
+			if(input_mysql == 'true'){
+				addNumberInstanceDb();
+			}
+		}
+		
+		function addNumberInstanceWp(){
+			var numberInstanceWp = parseInt(document.getElementById('numberInstanceWp').value);
+			document.getElementById('numberInstanceWp').value = numberInstanceWp + 1;
+		}
+		
+		function addNumberInstanceDb(){
+			var numberInstanceDb = parseInt(document.getElementById('numberInstanceDb').value);
+			document.getElementById('numberInstanceDb').value = numberInstanceDb + 1;
+		}
 		
 		function moverInicioSePosicaoInvalida(valor){
 			if(document.getElementById('ondrop-' + valor).value != 'true'){

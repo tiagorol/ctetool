@@ -74,29 +74,19 @@ public class Benchmark implements Serializable {
 	}
 	
 	public Benchmark(Benchmark benchmark, Configuration configuration) {
-		this.numberInstanceDb = 1;
+		this.numberInstanceLb = benchmark.getNumberInstanceLb();
+		this.numberInstanceWp = benchmark.getNumberInstanceWp();
+		this.numberInstanceDb = benchmark.getNumberInstanceDb();
 		this.name = benchmark.getName();
 		this.rounds = configuration.getRounds();
 		this.workloads = configuration.getWorkloads();
 		this.size = configuration.getSize();
 		this.sizeWordpress = configuration.getSizeWordpress();
 		if(benchmark.type == 0){
-			createBenchmarkSingle();
+			this.typeTopology = TypeTopology.SINGLE;
 		}else{
-			createBenchmarkMulti(benchmark);
+			this.typeTopology = TypeTopology.MULTI;
 		}
-	}
-
-	private void createBenchmarkMulti(Benchmark benchmark) {
-		this.typeTopology = TypeTopology.MULTI;
-		this.numberInstanceWp = benchmark.numberInstanceWp;
-		this.numberInstanceLb = 1;
-	}
-
-	private void createBenchmarkSingle(){
-		this.typeTopology = TypeTopology.SINGLE;
-		this.numberInstanceWp = 1;
-		this.numberInstanceLb = 0;
 	}
 
 	public Long getId() {
