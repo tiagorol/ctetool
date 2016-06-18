@@ -1,5 +1,6 @@
 package br.com.ctetool.service;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -26,6 +27,10 @@ public class BenchmarkService extends BaseService {
 	@Override
 	public <T> void delete(T entity) {
 		super.delete(entity);
+	}
+	
+	public Benchmark fetchById(Serializable id) {
+		return super.fetchById(id, Benchmark.class);
 	}
 
 }

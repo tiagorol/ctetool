@@ -42,6 +42,7 @@
                         <th>Nº de execuções</th>
                         <th>Workload</th>
                         <th>Apagar</th>
+                        <th>Implantar</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -57,6 +58,7 @@
                         	<th><c:out value="${benchmark.rounds}"/></th>
                         	<th><c:out value="${benchmark.workloads}"/></th>
                         	<th><a href="deleteBenchmark?id=<c:out value='${benchmark.id}'/>">Apagar</a></th>                         	
+                        	<th><a href="deploy?id=<c:out value='${benchmark.id}'/>">Implantar</a></th>
                         </tr>
                     </c:forEach>
                     </tbody>

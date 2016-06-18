@@ -1,0 +1,8 @@
+image: #{image}
+size: #{size}
+size_wordpress: #{size_wordpress}
+agent_user: #{agent_user}
+host_crawler: #{host_crawler}
+benchmark_id: #{benchmark_id}
+rounds: #{rounds}
+workloads: #{workloads}
