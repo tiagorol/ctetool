@@ -15,6 +15,7 @@ import com.mchange.io.FileUtils;
 
 import br.com.ctetool.entity.Benchmark;
 import br.com.ctetool.entity.Configuration;
+import br.com.ctetool.enumeration.Status;
 import br.com.ctetool.enumeration.TypeTopology;
 import br.com.ctetool.service.BenchmarkService;
 import br.com.ctetool.service.ConfigurationService;
@@ -51,6 +52,8 @@ public class DeployController {
 		String contentsAsString = FileUtils.getContentsAsString(inputs);
 		contentsAsString = replaceValues(contentsAsString, benchmark);
 		FileCopyUtils.copy(contentsAsString.getBytes(), new File(pathFileInputs));
+		benchmark.setStatus(Status.WAITING);
+		benchmarkService.updateStatus(benchmark);
 		run(benchmark);
 		return new ModelAndView("redirect:/listBenchmark");
 	}

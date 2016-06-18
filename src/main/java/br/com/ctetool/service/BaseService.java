@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class BaseService {
 	
 	@Autowired
-    private SessionFactory sessionFactory;
+    protected SessionFactory sessionFactory;
 		
     public <T> T create(final T entity) {
         sessionFactory.getCurrentSession().save(entity);

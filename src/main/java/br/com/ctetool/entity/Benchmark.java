@@ -13,6 +13,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import br.com.ctetool.enumeration.Status;
 import br.com.ctetool.enumeration.TypeTopology;
 
 @Entity
@@ -61,11 +62,19 @@ public class Benchmark implements Serializable {
 	@Size(min = 2, max = 40)
 	private String workloads;
 	
+	@NotNull
+	@Enumerated(EnumType.ORDINAL)
+	private Status status;
+	
 	@Transient
 	private Integer type;
 	
+	@Transient
+	private Double percentage;
+	
 	public Benchmark() {
 		super();
+		this.status = Status.CREATED;
 	}
 
 	public Benchmark(long id) {
@@ -74,6 +83,7 @@ public class Benchmark implements Serializable {
 	}
 	
 	public Benchmark(Benchmark benchmark, Configuration configuration) {
+		this();
 		this.numberInstanceLb = benchmark.getNumberInstanceLb();
 		this.numberInstanceWp = benchmark.getNumberInstanceWp();
 		this.numberInstanceDb = benchmark.getNumberInstanceDb();
@@ -168,6 +178,14 @@ public class Benchmark implements Serializable {
 	public void setWorkloads(String workloads) {
 		this.workloads = workloads;
 	}
+	
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 
 	public Integer getType() {
 		return type;
@@ -177,4 +195,12 @@ public class Benchmark implements Serializable {
 		this.type = type;
 	}
 
+	public Double getPercentage() {
+		return percentage;
+	}
+
+	public void setPercentage(Double percentage) {
+		this.percentage = percentage;
+	}
+	
 }

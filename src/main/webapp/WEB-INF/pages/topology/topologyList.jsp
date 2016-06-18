@@ -41,8 +41,9 @@
                         <th>Tipo Instância WP</th>
                         <th>Nº de execuções</th>
                         <th>Workload</th>
-                        <th>Apagar</th>
+                        <th>Status</th>
                         <th>Implantar</th>
+                        <th>Apagar</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -57,8 +58,29 @@
                         	<th><c:out value="${benchmark.sizeWordpress}"/></th>
                         	<th><c:out value="${benchmark.rounds}"/></th>
                         	<th><c:out value="${benchmark.workloads}"/></th>
-                        	<th><a href="deleteBenchmark?id=<c:out value='${benchmark.id}'/>">Apagar</a></th>                         	
-                        	<th><a href="deploy?id=<c:out value='${benchmark.id}'/>">Implantar</a></th>
+                        	<th>
+                        		<c:if test="${(benchmark.status eq 'CREATED') or (benchmark.status eq 'WAITING')}">
+                        			<img src="resources/image/red.jpg" width="20px" height="20px" />
+                        		</c:if>
+                        		<c:if test="${benchmark.status eq 'EXECUTION'}">
+                        			<img src="resources/image/yelow.jpg" width="20px" height="20px" />
+                        		</c:if>
+                        		<c:if test="${benchmark.status eq 'FINALIZED'}">
+                        			<img src="resources/image/green.jpg" width="20px" height="20px" />
+                        		</c:if>
+                        	</th>
+                        	<th>
+                        		<c:if test="${benchmark.status eq 'CREATED'}">
+                        			<a href="deploy?id=<c:out value='${benchmark.id}'/>">Implantar</a>	
+                        		</c:if>
+                        		<c:if test="${(benchmark.status ne 'CREATED') and (benchmark.status ne 'FINALIZED')}">
+                        			<c:out value="${benchmark.percentage}"/>%	
+                        		</c:if>
+                        		<c:if test="${benchmark.status eq 'FINALIZED'}">
+                        			100%
+                        		</c:if>
+                        	</th>
+                        	<th><a href="deleteBenchmark?id=<c:out value='${benchmark.id}'/>">Apagar</a></th>
                         </tr>
                     </c:forEach>
                     </tbody>
