@@ -7,10 +7,10 @@ import br.com.ctetool.entity.Benchmark;
 @Service
 public class ResultService extends BaseService {
 	
-	public Double calculatingPercentage(Benchmark benchmark){
+	public Integer calculatingPercentage(Benchmark benchmark){
 		int totalRecords = count(benchmark);
 		int totalExpected = benchmark.getRounds() * benchmark.getWorkloads().split(",").length; 
-		return (double) (totalRecords * 100 / totalExpected);
+		return totalRecords * 100 / totalExpected;
 	}
 
 	private int count(Benchmark benchmark) {

@@ -29,7 +29,7 @@ public class BenchmarkService extends BaseService {
 		List<Benchmark> listBenchmark =  super.fetchAll(Benchmark.class);
 		for (Benchmark benchmark : listBenchmark) {
 			if(benchmark.getStatus().equals(Status.WAITING) || benchmark.getStatus().equals(Status.EXECUTION)){
-				Double percentage = resultService.calculatingPercentage(benchmark);
+				Integer percentage = resultService.calculatingPercentage(benchmark);
 				benchmark.setPercentage(percentage);
 				if(percentage == 100){
 					benchmark.setStatus(Status.FINALIZED);
@@ -54,8 +54,9 @@ public class BenchmarkService extends BaseService {
 
 	public void updateStatus(Benchmark benchmark) {
 		sessionFactory.getCurrentSession()
-				  	  .createQuery("UPDATE Benchmark SET status = :status")
+				  	  .createQuery("UPDATE Benchmark SET status = :status WHERE id = :id")
 				  	  .setParameter("status", benchmark.getStatus())
+				  	  .setParameter("id", benchmark.getId())
 				  	  .executeUpdate();
 	}
 

@@ -70,7 +70,7 @@ public class Benchmark implements Serializable {
 	private Integer type;
 	
 	@Transient
-	private Double percentage;
+	private Integer percentage;
 	
 	public Benchmark() {
 		super();
@@ -195,12 +195,12 @@ public class Benchmark implements Serializable {
 		this.type = type;
 	}
 
-	public Double getPercentage() {
+	public Integer getPercentage() {
 		return percentage;
 	}
 
-	public void setPercentage(Double percentage) {
+	public void setPercentage(Integer percentage) {
 		this.percentage = percentage;
 	}
-	
+
 }
