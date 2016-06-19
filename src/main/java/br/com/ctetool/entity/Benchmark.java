@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -17,6 +18,7 @@ import br.com.ctetool.enumeration.Status;
 import br.com.ctetool.enumeration.TypeTopology;
 
 @Entity
+@Table(name = "benchmark")
 public class Benchmark implements Serializable {
 
 	private static final long serialVersionUID = 6649533005740029993L;
