@@ -16,6 +16,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.joda.time.DateTime;
+
 @Entity
 @Table(name = "result")
 public class Result implements Serializable{
@@ -33,7 +35,7 @@ public class Result implements Serializable{
 	
 	@NotNull
 	@JoinColumn(name = "id_benchmark")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Benchmark benchmark;
 	
 	@NotNull
@@ -82,6 +84,10 @@ public class Result implements Serializable{
 
 	public Date getDateTest() {
 		return dateTest;
+	}
+	
+	public String getDateTestFormat() {
+		return new DateTime(this.dateTest).toString("dd/MM/yyyy HH:mm");
 	}
 
 	public void setDateTest(Date dateTest) {

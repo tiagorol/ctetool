@@ -1,10 +1,16 @@
 package br.com.ctetool.service;
 
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import br.com.ctetool.entity.Benchmark;
+import br.com.ctetool.entity.Result;
 
 @Service
+@Transactional
 public class ResultService extends BaseService {
 	
 	public Integer calculatingPercentage(Benchmark benchmark){
@@ -19,6 +25,14 @@ public class ResultService extends BaseService {
 					  				  .setParameter("benchmark", benchmark)
 					  				  .uniqueResult())
 					  				  .intValue();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Result> findByBenchmark(Benchmark benchmark) {
+		return sessionFactory.getCurrentSession()
+				  			 .createQuery("SELECT res FROM Result res WHERE res.benchmark = :benchmark")
+				  			 .setParameter("benchmark", benchmark)
+				  			 .list();
 	}
 
 }

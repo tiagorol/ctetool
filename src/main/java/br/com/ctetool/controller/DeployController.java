@@ -27,12 +27,17 @@ import br.com.ctetool.service.ConfigurationService;
 public class DeployController {
 	
 	private static final Logger logger = Logger.getLogger(DeployController.class);
-	
+
 	private static final String SO_WINDOWS = "WINDOWS";
+	private static final String TEMPLATE_INPUTS = "template-inputs.yaml";
+	private static final String TEMPLATE_BLUEPRINT = "template-wordpress-multi-blueprint.yaml";
 
 	@Value("${path.file.inputs}")
 	private String pathFileInputs;
 	
+	@Value("${path.file.blueprint}")
+	private String pathFileBlueprint;
+
 	@Value("${path.file.script}")
 	private String pathFileScript;
 	
@@ -53,12 +58,8 @@ public class DeployController {
 		logger.info("Buscando Benchmark com Id: " + id + "...");
 		Benchmark benchmark = benchmarkService.fetchById(id);
 		
-		logger.info("Alterando inputs.yaml");
-		ClassLoader classLoader = getClass().getClassLoader();
-		File inputs = new File(classLoader.getResource("templateInputs.yaml").getFile());
-		String contentsAsString = FileUtils.getContentsAsString(inputs);
-		contentsAsString = replaceValues(contentsAsString, benchmark);
-		FileCopyUtils.copy(contentsAsString.getBytes(), new File(pathFileInputs));
+		changeInputs(benchmark);
+		changeBlueprint(benchmark);
 		
 		logger.info("Atualizando status do Benchmark...");
 		benchmark.setStatus(Status.WAITING);
@@ -66,8 +67,34 @@ public class DeployController {
 		run(benchmark);
 		return new ModelAndView("redirect:/listBenchmark");
 	}
+	
+	private void changeBlueprint(Benchmark benchmark) throws IOException {
+		logger.info("Alterando blueprint.yaml");
+		ClassLoader classLoader = getClass().getClassLoader();
+		File inputs = new File(classLoader.getResource(TEMPLATE_BLUEPRINT).getFile());
+		String contentsAsString = FileUtils.getContentsAsString(inputs);
+		contentsAsString = replaceValuesBluePrint(contentsAsString, benchmark);
+		FileCopyUtils.copy(contentsAsString.getBytes(), new File(pathFileBlueprint));
+	}
 
-	private String replaceValues(String contentsAsString, Benchmark benchmark) {
+	private void changeInputs(Benchmark benchmark) throws IOException {
+		logger.info("Alterando inputs.yaml");
+		ClassLoader classLoader = getClass().getClassLoader();
+		File inputs = new File(classLoader.getResource(TEMPLATE_INPUTS).getFile());
+		String contentsAsString = FileUtils.getContentsAsString(inputs);
+		contentsAsString = replaceValuesInputs(contentsAsString, benchmark);
+		FileCopyUtils.copy(contentsAsString.getBytes(), new File(pathFileInputs));
+	}
+	
+	private String replaceValuesBluePrint(String contentsAsString, Benchmark benchmark) {
+		contentsAsString = contentsAsString.replace("#{instances_deploy}", benchmark.getNumberInstanceWp().toString());
+		
+		logger.info("Conteudo blueprint.yaml");
+		logger.info(contentsAsString);
+		return contentsAsString;
+	}
+
+	private String replaceValuesInputs(String contentsAsString, Benchmark benchmark) {
 		
 		Configuration configuration = configurationService.findConfiguration();
 		

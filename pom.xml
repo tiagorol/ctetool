@@ -20,10 +20,17 @@
 		<hibernate-validator.version>4.3.2.Final</hibernate-validator.version>
 		<validation-api.version>1.0.0.GA</validation-api.version>
 		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+		<joda-time.version>2.9.4</joda-time.version>
 	</properties>
 
 	<!-- Specifying the Dependencies -->
 	<dependencies>
+	
+		<dependency>
+    		<groupId>joda-time</groupId>
+    		<artifactId>joda-time</artifactId>
+    		<version>${joda-time.version}</version>
+		</dependency>
 	
 		<!-- commons-lang -->
 		<dependency>

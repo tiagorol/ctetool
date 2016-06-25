@@ -44,6 +44,7 @@
                         <th>Status</th>
                         <th>Implantar</th>
                         <th>Apagar</th>
+                        <th>Resultados</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -81,6 +82,14 @@
                         		</c:if>
                         	</th>
                         	<th><a href="deleteBenchmark?id=<c:out value='${benchmark.id}'/>">Apagar</a></th>
+                        	<th>
+                        		<c:if test="${(benchmark.status eq 'EXECUTION') or (benchmark.status eq 'FINALIZED')}">
+                        			<a href="viewResult?id=<c:out value='${benchmark.id}'/>">Resultados</a>
+                        		</c:if>
+                        		<c:if test="${(benchmark.status eq 'CREATED') or (benchmark.status eq 'WAITING')}">
+                        			Resultados
+                        		</c:if>	
+                        	</th>
                         </tr>
                     </c:forEach>
                     </tbody>
