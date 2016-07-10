@@ -6,6 +6,10 @@
 <head>
 <title>:: CTE Tool ::</title>
 
+<script src="<c:url value="/resources/js/jquery.min.js" />"></script>
+<script src="<c:url value="/resources/js/highcharts.js" />"></script>
+<script src="<c:url value="/resources/js/exporting.js" />"></script>
+
 <script src="<c:url value="/resources/js/interact.min.js" />"></script>
 <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css" />">
 
@@ -65,6 +69,78 @@
         </div>
     </div>
 </div>
+    
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+   
+<script type="text/javascript">
+
+    var	options = {
+       	chart: {
+           	renderTo: 'container',
+           	type: 'spline'
+       	},
+        title: {
+            text: 'Gráfico Desempenho',
+            x: -20
+        },
+        subtitle: {
+            text: 'Tempo de Resposta X Workload',
+            x: -20
+        },
+        credits: {
+			enabled: false
+        },
+        xAxis: {
+        	title: {
+                text: 'Workload'
+            },
+            categories: []
+        },
+        exporting: {
+        	enabled: false
+        },
+        yAxis: {
+            title: {
+                text: 'Tempo de Resposra (ms)'
+            }
+        },
+        tooltip: {
+            valueSuffix: ' ms',
+            crosshairs: true,
+            shared: true
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            borderWidth: 0
+        },
+        series: []
+    };
+    
+	$(document).ready(function() {
+		 var chart = new Highcharts.Chart(options);
+		 chart.showLoading('Carregando Gráfico...');
+		 
+	     $.ajax({
+	        url: 'graphic',
+	        type: 'GET',
+	        async: true,
+	        dataType: "json",
+	        success: function(data) {
+	      		
+	        	for (var i=0; i < data.series.length; i++){
+	                options.series[i] = data.series[i];
+                }
+	        	
+	           	options.xAxis.categories = data.categories;
+	        	chart = new Highcharts.Chart(options);
+	        },
+	        cache: false
+	    });
+	}); 
+	
+</script>
     
 </body>
 </html>
