@@ -126,6 +126,7 @@
 	        url: 'graphic',
 	        type: 'GET',
 	        async: true,
+			data: 'id=<%= request.getParameter("id") %>',
 	        dataType: "json",
 	        success: function(data) {
 	      		

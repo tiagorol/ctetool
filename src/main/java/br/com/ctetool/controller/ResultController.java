@@ -1,6 +1,5 @@
 package br.com.ctetool.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.com.ctetool.entity.Benchmark;
 import br.com.ctetool.entity.Result;
+import br.com.ctetool.entity.vo.GraphicVO;
 import br.com.ctetool.entity.vo.ResultVO;
 import br.com.ctetool.entity.vo.Serie;
+import br.com.ctetool.service.BenchmarkService;
 import br.com.ctetool.service.ResultService;
 
 @Controller
@@ -22,6 +23,9 @@ public class ResultController {
 
 	@Autowired
 	private ResultService resultService;
+	
+	@Autowired
+	private BenchmarkService benchmarkService;
 
 	@RequestMapping("viewResult")
 	public ModelAndView deploy(@RequestParam long id) {
@@ -31,24 +35,22 @@ public class ResultController {
 
 	@RequestMapping(value = "graphic", method = RequestMethod.GET, headers="Accept=*/*")
 	@ResponseBody
-	public ResultVO createNewProject() {
+	public ResultVO findGraphic(@RequestParam long id) {
+		Benchmark benchmark = benchmarkService.fetchById(id);
+		List<GraphicVO> resultGraphic = resultService.findResultGraphic(benchmark);
+		return criateResultVO(resultGraphic, benchmark);
+	}
+
+	private ResultVO criateResultVO(List<GraphicVO> resultGraphic, Benchmark benchmark) {
+		ResultVO resultVO = new ResultVO(resultGraphic.size());
+		Serie serie = new Serie(benchmark.getName(), resultGraphic.size());
 		
-		
-		
-		ResultVO resultVO = new ResultVO();
-		resultVO.setSeries(new ArrayList<>());
-		resultVO.setCategories(new String[]{"200","400","700"});
-		
-		Serie serie = new Serie();
-		serie.setName("T1-M");
-		serie.setData(new int[]{200, 500, 900});
-		
-		Serie serie1 = new Serie();
-		serie1.setName("T1-L");
-		serie1.setData(new int[]{500, 1000, 1800});
+		for (int i = 0; i < resultGraphic.size(); i++) {
+			serie.getData()[i] = resultGraphic.get(i).getResponseTime();
+			resultVO.getCategories()[i] = resultGraphic.get(i).getWorkload().toString();
+		}
 		
 		resultVO.getSeries().add(serie);
-		resultVO.getSeries().add(serie1);
 		
 		return resultVO;
 	}
