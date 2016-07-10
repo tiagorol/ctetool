@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <head>
 <title>:: CTE Tool ::</title>
 
+<script src="<c:url value="/resources/js/jquery.min.js" />"></script>
 <script src="<c:url value="/resources/js/interact.min.js" />"></script>
 <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css" />">
 
@@ -29,9 +31,10 @@
             </c:if>
             <c:if test="${not empty listBenchmark}">   
             
-                <table class="table table-hover table-bordered">
+                <table id="table" class="table table-hover table-bordered">
                     <thead style="background-color: #bce8f1;">
                     <tr>
+                        <th><input type="checkbox" ></th>
                         <th>Nome</th>
                         <th>Tipo Topologia</th>
                         <th>Nº Instâncias LB</th>
@@ -50,6 +53,7 @@
                     <tbody>
                     <c:forEach items="${listBenchmark}" var="benchmark">
                         <tr>
+                        	<th><input type="checkbox" value="${benchmark.id}" ></th>
                         	<th><c:out value="${benchmark.name}"/></th>
                         	<th><c:out value="${benchmark.typeTopology}"/></th>
                         	<th><c:out value="${benchmark.numberInstanceLb}"/></th>
@@ -96,10 +100,31 @@
                 </table>
             </c:if>
             
-            <a href="index">Voltar</a>
+            <form:form cssClass="form-horizontal" modelAttribute="benchmark" method="post" action="compare">
+				
+     			<input type="hidden" id="idBenchmark" name="idBenchmark" value="" />             
+				<input type="submit" onclick="beforeSubmit()" class="btn btn-primary" value="Comparar" />
+             
+            	<a href="index">Voltar</a>
+            </form:form>
+            
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+//<![CDATA[
+
+	function beforeSubmit(){
+ 		var result = '';
+	 	$("input:checkbox:checked").each(function(){
+	     	result = result + $(this).val() + ','; 
+		});
+		$("#idBenchmark").val(result);
+	}
+ 
+//]]>	
+</script>   
     
 </body>
 </html>

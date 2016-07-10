@@ -2,9 +2,19 @@ package br.com.ctetool.entity.vo;
 
 public class GraphicVO {
 	
+	private Long idBenchmark;
+	
 	private Integer workload;
 	
 	private Integer responseTime;
+	
+	public Long getIdBenchmark() {
+		return idBenchmark;
+	}
+
+	public void setIdBenchmark(Long idBenchmark) {
+		this.idBenchmark = idBenchmark;
+	}
 
 	public Integer getWorkload() {
 		return workload;

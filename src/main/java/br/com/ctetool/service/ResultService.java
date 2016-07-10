@@ -1,5 +1,6 @@
 package br.com.ctetool.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -38,19 +39,27 @@ public class ResultService extends BaseService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<GraphicVO> findResultGraphic(Benchmark benchmark) {
+	public List<GraphicVO> findResultGraphic(List<Benchmark> listBenchmark) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT res.workload as workload, AVG(res.meanResponseTime) as responseTime ");
+		sql.append("SELECT res.workload as workload, AVG(res.meanResponseTime) as responseTime, ben.id as idBenchmark ");
 		sql.append("FROM Result res ");
 		sql.append("INNER JOIN res.benchmark ben ");
-		sql.append("WHERE ben = :benchmark ");
+		sql.append("WHERE ben.id IN (:listBenchmark) ");
 		sql.append("GROUP BY ben.id, res.workload");
 		
 		return sessionFactory.getCurrentSession()
 				  			 .createQuery(sql.toString())
-				  			 .setParameter("benchmark", benchmark)
+				  			 .setParameter("listBenchmark", getListLong(listBenchmark))
 				  			 .setResultTransformer(Transformers.aliasToBean(GraphicVO.class))
 				  			 .list();
+	}
+
+	private List<Long> getListLong(List<Benchmark> listBenchmark) {
+		List<Long> listLong = new ArrayList<>();
+		for (Benchmark benchmark : listBenchmark) {
+			listLong.add(benchmark.getId());
+		}
+		return listLong;
 	}
 
 }

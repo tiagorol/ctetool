@@ -1,5 +1,7 @@
 package br.com.ctetool.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +34,33 @@ public class ResultController {
 		List<Result> listResul = resultService.findByBenchmark(new Benchmark(id));
 		return new ModelAndView("result/resultList", "listResult", listResul);
 	}
+	
+	@RequestMapping("compare")
+	public ModelAndView compare(@RequestParam(value="idBenchmark", required=false) String idBenchmark) {
+		
+		//TODO: FAZER VALIDAÇÃO DE FOI SELECIONADO ALGUMA COISA
+		
+		List<Benchmark> listBenchmark = findListBenchmark(idBenchmark.split(","));
+		List<GraphicVO> resultGraphic = resultService.findResultGraphic(listBenchmark);
+		
+		System.out.println(resultGraphic);
+		
+		return new ModelAndView("result/resultList", "listResult", "");
+	}
+
+	private List<Benchmark> findListBenchmark(String[] ids) {
+		List<Benchmark> listBenchmark = new ArrayList<>();
+		for (String id : ids) {
+			listBenchmark.add(benchmarkService.fetchById(Long.parseLong(id)));
+		}
+		return listBenchmark;
+	}
 
 	@RequestMapping(value = "graphic", method = RequestMethod.GET, headers="Accept=*/*")
 	@ResponseBody
 	public ResultVO findGraphic(@RequestParam long id) {
 		Benchmark benchmark = benchmarkService.fetchById(id);
-		List<GraphicVO> resultGraphic = resultService.findResultGraphic(benchmark);
+		List<GraphicVO> resultGraphic = resultService.findResultGraphic(new ArrayList<>(Collections.singleton(benchmark)));
 		return criateResultVO(resultGraphic, benchmark);
 	}
 

@@ -24,9 +24,12 @@
     <div class="panel panel-success">
         <div class="panel-heading">
             <h3 class="panel-title">
-                <div align="left"><b>Lista de Resultados dos Testes</b> </div>
+                <div align="left"><b>Resultados dos Testes</b> </div>
             </h3>
         </div>
+        
+        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        
         <div class="panel-body">
             <c:if test="${empty listResult}">
                 Não existem resultados<br /><br />
@@ -70,8 +73,6 @@
     </div>
 </div>
     
-<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-   
 <script type="text/javascript">
 
     var	options = {
