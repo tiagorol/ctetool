@@ -34,7 +34,7 @@
                 <table id="table" class="table table-hover table-bordered">
                     <thead style="background-color: #bce8f1;">
                     <tr>
-                        <th><input type="checkbox" ></th>
+                        <th><input type="checkbox" onclick="checkAll(this)" ></th>
                         <th>Nome</th>
                         <th>Tipo Topologia</th>
                         <th>Nº Instâncias LB</th>
@@ -114,15 +114,22 @@
 
 <script type="text/javascript">
 //<![CDATA[
+    function checkAll(checkbox){
+    	var checked = $(checkbox).is(":checked");
+   		$("input:checkbox").each(function(){
+   			$(this).prop('checked', checked);    	     	 
+   		});
+    }
 
 	function beforeSubmit(){
  		var result = '';
 	 	$("input:checkbox:checked").each(function(){
-	     	result = result + $(this).val() + ','; 
+	 		if($.isNumeric($(this).val())){
+		     	result = result + $(this).val() + ','; 
+	 		}
 		});
 		$("#idBenchmark").val(result);
 	}
- 
 //]]>	
 </script>   
     
