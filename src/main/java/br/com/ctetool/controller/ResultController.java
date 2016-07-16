@@ -29,23 +29,26 @@ public class ResultController {
 	@Autowired
 	private BenchmarkService benchmarkService;
 
-	@RequestMapping("viewResult")
-	public ModelAndView deploy(@RequestParam long id) {
-		List<Result> listResul = resultService.findByBenchmark(new Benchmark(id));
+	@RequestMapping("viewResultSingle")
+	public ModelAndView viewResultSingle(@RequestParam long id) {
+		Benchmark benchmark = new Benchmark(id);
+		List<Result> listResul = resultService.findByBenchmark(new ArrayList<>(Collections.singleton(benchmark)));
 		return new ModelAndView("result/resultList", "listResult", listResul);
 	}
 	
-	@RequestMapping("compare")
-	public ModelAndView compare(@RequestParam(value="idBenchmark", required=false) String idBenchmark) {
-		
-		//TODO: FAZER VALIDAÇÃO DE FOI SELECIONADO ALGUMA COISA
-		
-		List<Benchmark> listBenchmark = findListBenchmark(idBenchmark.split(","));
+	@RequestMapping("viewResultMulti")
+	public ModelAndView viewResultMulti(@RequestParam String id) {
+		List<Benchmark> listBenchmark = findListBenchmark(id.split(","));
+		List<Result> listResult = resultService.findByBenchmark(listBenchmark);
+		return new ModelAndView("result/resultList", "listResult", listResult);
+	}
+	
+	@RequestMapping(value = "graphic", method = RequestMethod.GET, headers="Accept=*/*")
+	@ResponseBody
+	public ResultVO findGraphic(@RequestParam String id) {
+		List<Benchmark> listBenchmark = findListBenchmark(id.split(","));
 		List<GraphicVO> resultGraphic = resultService.findResultGraphic(listBenchmark);
-		
-		System.out.println(resultGraphic);
-		
-		return new ModelAndView("result/resultList", "listResult", "");
+		return criateResultVO(resultGraphic, listBenchmark);
 	}
 
 	private List<Benchmark> findListBenchmark(String[] ids) {
@@ -56,26 +59,40 @@ public class ResultController {
 		return listBenchmark;
 	}
 
-	@RequestMapping(value = "graphic", method = RequestMethod.GET, headers="Accept=*/*")
-	@ResponseBody
-	public ResultVO findGraphic(@RequestParam long id) {
-		Benchmark benchmark = benchmarkService.fetchById(id);
-		List<GraphicVO> resultGraphic = resultService.findResultGraphic(new ArrayList<>(Collections.singleton(benchmark)));
-		return criateResultVO(resultGraphic, benchmark);
-	}
-
-	private ResultVO criateResultVO(List<GraphicVO> resultGraphic, Benchmark benchmark) {
-		ResultVO resultVO = new ResultVO(resultGraphic.size());
-		Serie serie = new Serie(benchmark.getName(), resultGraphic.size());
+	private ResultVO criateResultVO(List<GraphicVO> resultGraphic, List<Benchmark> listBenchmark) {
+		ResultVO resultVO = new ResultVO(resultGraphic);
 		
-		for (int i = 0; i < resultGraphic.size(); i++) {
-			serie.getData()[i] = resultGraphic.get(i).getResponseTime();
-			resultVO.getCategories()[i] = resultGraphic.get(i).getWorkload().toString();
+		List<Serie> listSerie = new ArrayList<>();
+		
+		for (Benchmark benchmark : listBenchmark) {
+			listSerie.add(new Serie(benchmark.getId(), benchmark.getName(), resultVO.getCategories().length));
 		}
 		
-		resultVO.getSeries().add(serie);
+		for (int i = 0; i < resultGraphic.size(); i++) {
+			Serie serie = getSerie(resultGraphic.get(i).getIdBenchmark(), listSerie);
+			serie.getData()[getIndexOf(resultGraphic.get(i), resultVO.getCategories())] = resultGraphic.get(i).getResponseTime();
+		}
 		
+		resultVO.getSeries().addAll(listSerie);
 		return resultVO;
+	}
+
+	private int getIndexOf(GraphicVO graphicVO, String[] categories) {
+		for (int i = 0; i < categories.length; i++) {
+			if(String.valueOf(graphicVO.getWorkload()).equals(categories[i])){
+				return i;
+			}
+		}
+		return 0;
+	}
+
+	private Serie getSerie(Long idBenchmark, List<Serie> listSerie) {
+		for (Serie serie : listSerie) {
+			if(serie.getId().equals(idBenchmark)){
+				return serie;
+			}
+		}
+		return null;
 	}
 
 }

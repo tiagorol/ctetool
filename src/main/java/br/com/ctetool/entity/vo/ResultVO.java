@@ -2,6 +2,7 @@ package br.com.ctetool.entity.vo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ResultVO implements Serializable{
@@ -12,10 +13,29 @@ public class ResultVO implements Serializable{
 	
 	private String[] categories;
 	
-	public ResultVO(int size) {
+	public ResultVO(List<GraphicVO> resultGraphic) {
 		super();
 		this.series = new ArrayList<>();
-		this.categories = new String[size];
+		criateListCategoria(resultGraphic);
+	}
+
+	private void criateListCategoria(List<GraphicVO> resultGraphic) {
+		
+		List<Integer> listCategories = new ArrayList<>();
+		
+		for (GraphicVO graphicVO : resultGraphic) {
+			if(!listCategories.contains(graphicVO.getWorkload())){
+				listCategories.add(graphicVO.getWorkload());
+			}
+		}
+		
+		Collections.sort(listCategories);
+		categories = new String[listCategories.size()];
+		
+		int i = 0;
+		for (Integer categorie : listCategories) {
+			categories[i++] = String.valueOf(categorie);
+		}
 	}
 
 	public List<Serie> getSeries() {

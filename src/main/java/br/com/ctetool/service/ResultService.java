@@ -1,6 +1,5 @@
 package br.com.ctetool.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -31,10 +30,10 @@ public class ResultService extends BaseService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Result> findByBenchmark(Benchmark benchmark) {
+	public List<Result> findByBenchmark(List<Benchmark> listBenchmark) {
 		return sessionFactory.getCurrentSession()
-				  			 .createQuery("SELECT res FROM Result res WHERE res.benchmark = :benchmark")
-				  			 .setParameter("benchmark", benchmark)
+				  			 .createQuery("SELECT res FROM Result res WHERE res.benchmark IN (:listBenchmark)")
+				  			 .setParameterList("listBenchmark", listBenchmark)
 				  			 .list();
 	}
 	
@@ -44,23 +43,14 @@ public class ResultService extends BaseService {
 		sql.append("SELECT res.workload as workload, AVG(res.meanResponseTime) as responseTime, ben.id as idBenchmark ");
 		sql.append("FROM Result res ");
 		sql.append("INNER JOIN res.benchmark ben ");
-		sql.append("WHERE ben.id IN (:listBenchmark) ");
-		sql.append("GROUP BY ben.id, res.workload");
+		sql.append("WHERE ben IN (:listBenchmark) ");
+		sql.append("GROUP BY ben.id, res.workload ");
+		sql.append("ORDER BY res.workload ");
 		
 		return sessionFactory.getCurrentSession()
 				  			 .createQuery(sql.toString())
-				  			 .setParameter("listBenchmark", getListLong(listBenchmark))
+				  			 .setParameterList("listBenchmark", listBenchmark)
 				  			 .setResultTransformer(Transformers.aliasToBean(GraphicVO.class))
 				  			 .list();
 	}
-
-	private List<Long> getListLong(List<Benchmark> listBenchmark) {
-		List<Long> listLong = new ArrayList<>();
-		for (Benchmark benchmark : listBenchmark) {
-			listLong.add(benchmark.getId());
-		}
-		return listLong;
-	}
-
 }
-

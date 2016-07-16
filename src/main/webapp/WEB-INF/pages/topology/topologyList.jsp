@@ -88,7 +88,7 @@
                         	<th><a href="deleteBenchmark?id=<c:out value='${benchmark.id}'/>">Apagar</a></th>
                         	<th>
                         		<c:if test="${(benchmark.status eq 'EXECUTION') or (benchmark.status eq 'FINALIZED')}">
-                        			<a href="viewResult?id=<c:out value='${benchmark.id}'/>">Resultados</a>
+                        			<a href="viewResultSingle?id=<c:out value='${benchmark.id}'/>">Resultados</a>
                         		</c:if>
                         		<c:if test="${(benchmark.status eq 'CREATED') or (benchmark.status eq 'WAITING')}">
                         			Resultados
@@ -100,9 +100,9 @@
                 </table>
             </c:if>
             
-            <form:form cssClass="form-horizontal" modelAttribute="benchmark" method="post" action="compare">
+            <form:form cssClass="form-horizontal" modelAttribute="benchmark" method="get" action="viewResultMulti">
 				
-     			<input type="hidden" id="idBenchmark" name="idBenchmark" value="" />             
+     			<input type="hidden" id="idBenchmark" name="id" value="" />             
 				<input type="submit" onclick="beforeSubmit()" class="btn btn-primary" value="Comparar" />
              
             	<a href="index">Voltar</a>
